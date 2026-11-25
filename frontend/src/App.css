@@ -1,0 +1,73 @@
+.page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 24px;
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
+  color: #1e293b;
+}
+
+.page-title {
+  margin: 0 0 16px;
+  font-size: 1.75rem;
+}
+
+.status-message {
+  padding: 24px;
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
+}
+
+.status-message--error {
+  color: #dc2626;
+}
+
+.scorers-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.scorers-table th,
+.scorers-table td {
+  padding: 10px 12px;
+  text-align: left;
+}
+
+.scorers-table thead tr {
+  border-bottom: 2px solid #cbd5e1;
+  color: #475569;
+  font-size: 0.9rem;
+}
+
+.scorers-table tbody tr {
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.scorers-table tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+.scorer-name {
+  font-weight: 600;
+}
+
+.team-badge {
+  display: inline-block;
+  margin-right: 8px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background-color: #e2e8f0;
+  color: #0f172a;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.goals-col,
+.goals-cell {
+  text-align: right !important;
+  font-weight: 700;
+}
