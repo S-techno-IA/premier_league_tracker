@@ -1,0 +1,71 @@
+.app-header {
+  background-color: #ffffff;
+  border-bottom: 2px solid #e2e8f0;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+}
+
+.app-header__inner {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.app-header__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #38003c;
+  text-decoration: none;
+}
+
+.app-header__brand:hover {
+  color: #2563eb;
+}
+
+.app-header__nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.app-header__link {
+  padding: 0.4rem 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #475569;
+  text-decoration: none;
+  border-radius: 6px;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.app-header__link:hover {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+.app-header__link--active {
+  color: #2563eb;
+  background-color: #eff6ff;
+}
+
+.app-header__logo {
+  height: 36px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}

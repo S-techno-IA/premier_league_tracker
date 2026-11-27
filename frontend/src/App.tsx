@@ -8,6 +8,7 @@ export default function App() {
   return (
     <>
       <Header />
+
       <Routes>
         <Route path="/" element={<Navigate to="/allTeams" replace />} />
         <Route path="/allTeams" element={<AllTeams />} />

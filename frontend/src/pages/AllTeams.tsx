@@ -1,74 +1,85 @@
 import { useEffect, useState } from "react";
-import "./App.css";
+import { Link } from "react-router-dom";
+import "./AllTeams.css";
 
-type Scorer = {
+type Team = {
   id: number;
-  scorer_name: string;
-  team_name: string;
+  name: string;
   short_name: string;
   total_goals: number;
 };
 
-export default function App() {
-  const [scorers, setScorers] = useState<Scorer[]>([]);
+export default function AllTeams() {
+  const [teams, setTeams] = useState<Team[]>([]);
+  const [top10Only, setTop10Only] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const fetchScorers = async () => {
+    async function loadTeams() {
       try {
-        const response = await fetch("http://localhost:3001/scorers");
-        if (!response.ok) {
-          throw new Error("Erreur lors de la réponse du serveur");
-        }
-        const data: Scorer[] = await response.json();
-        setScorers(data);
-      } catch (err) {
-        console.error(err);
-        setError("Impossible de charger les buteurs depuis l'API.");
+        const res = await fetch("http://localhost:3010/teams");
+        if (!res.ok) throw new Error();
+        const data: Team[] = await res.json();
+        setTeams(data);
+      } catch {
+        setError("Impossible de charger les équipes.");
       } finally {
         setLoading(false);
       }
-    };
+    }
 
-    fetchScorers();
+    loadTeams();
   }, []);
 
   if (loading) {
-    return <p className="status-message">Chargement des buteurs...</p>;
+    return <p className="teams-status">Chargement...</p>;
   }
 
   if (error) {
-    return <p className="status-message status-message--error">{error}</p>;
+    return <p className="teams-status teams-status--error">{error}</p>;
   }
 
-  return (
-    <main className="page">
-      <h1 className="page-title">Classement des buteurs — Premier League</h1>
+  const displayedTeams = top10Only ? teams.slice(0, 10) : teams;
 
-      <table className="scorers-table">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Buteur</th>
-            <th>Équipe</th>
-            <th className="goals-col">Buts</th>
-          </tr>
-        </thead>
-        <tbody>
-          {scorers.map((scorer, index) => (
-            <tr key={scorer.id}>
-              <td>{index + 1}</td>
-              <td className="scorer-name">{scorer.scorer_name}</td>
-              <td>
-                <span className="team-badge">{scorer.short_name}</span>
-                {scorer.team_name}
-              </td>
-              <td className="goals-cell">{scorer.total_goals}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+  return (
+    <main className="teams-page">
+      <header className="teams-header">
+        <div className="teams-header-row">
+          <div>
+            <h1>{top10Only ? "Top 10 des équipes" : "Toutes les équipes"}</h1>
+            <p className="teams-subtitle">
+              {displayedTeams.length} club{displayedTeams.length > 1 ? "s" : ""}{" "}
+              affiché
+              {displayedTeams.length > 1 ? "s" : ""} — cliquez sur une équipe
+              pour voir ses buteurs.
+            </p>
+          </div>
+
+          <button
+            type="button"
+            className={`top10-btn ${top10Only ? "top10-btn--active" : ""}`}
+            onClick={() => setTop10Only((prev) => !prev)}
+          >
+            {top10Only ? "Afficher toutes les équipes" : "Top 10 équipes"}
+          </button>
+        </div>
+      </header>
+
+      <ul className="teams-list">
+        {displayedTeams.map((team, index) => (
+          <li key={team.id}>
+            <Link to={`/teamInfo/${team.id}`} className="team-item-link">
+              <span className="team-main">
+                <span className="team-rank">#{index + 1}</span>
+                <span className="team-name">{team.name}</span>
+                <span className="team-short">{team.short_name}</span>
+              </span>
+              <span className="team-goals">{team.total_goals} buts</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
     </main>
   );
 }
